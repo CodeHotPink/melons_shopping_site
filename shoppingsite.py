@@ -74,7 +74,9 @@ def show_shopping_cart():
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
-
+    #print("THE OLD CART IS...:", session['cart'][melon_id])
+    print(session)
+    #print("THE OLD CART IS...:", session['cart'][melon_id])
     return render_template("cart.html")
 
 
@@ -88,16 +90,30 @@ def add_to_cart(melon_id):
 
     # TODO: Finish shopping cart functionality
 
-    try:
-        session['cart']
-    except KeyError:
-        session['cart'] = {}
+    if not session['cart']:
+       session['cart'] = {}
 
-    session['cart'] = session.get(melon_id, 0) + 1
+    print("ZERO", session['cart'])
+
+  #  session['cart'] = {melon_id : 0}
+    print(session['cart'].keys())
+    if melon_id in session['cart'].keys():
+        session['cart'][melon_id] += 1
+    else:
+        session['cart'][melon_id] = 1
+    print("FIRST", session['cart'][melon_id])
+    # print(melon_id in session['cart'][melon_id].keys())
+    # session['cart'][melon_id] += 1
+    # print("SECOND", session['cart'][melon_id])
+   # else:
+    #    session['cart'][melon_id] = 1
+    #session['cart'][melon_id] = session['cart'][melon_id].get(melon_id, 0) + 1
+    #session['cart'] = session.get(melon_id, [melon_id] = 0) + 1
+ #   session['cart'][melon_id].append(1)
 
     # DEBUGGING STATEMENTS, DELETE LATER
     print("MELON ID IS: " + str(melon_id))
-    print("SESSION DICTIONARY THING: " , session['cart'])
+    print("SESSION DICTIONARY THING: ", session['cart'])
     print(dir(session))
     print(type(session))
 
@@ -106,7 +122,7 @@ def add_to_cart(melon_id):
     #
     # - check if a "cart" exists in the session, and create one (an empty
     #   dictionary keyed to the string "cart") if not
-    # - check if the desired melon id is the cart, and if not, put it in
+    # - check if the desired melon id is in the cart, and if not, put it in
     # - increment the count for that melon id by 1
     # - flash a success message
     # - redirect the user to the cart page
