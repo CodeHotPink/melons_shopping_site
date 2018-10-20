@@ -91,25 +91,15 @@ def add_to_cart(melon_id):
     # TODO: Finish shopping cart functionality
 
     if not session['cart']:
-       session['cart'] = {}
+        session['cart'] = {}
 
     print("ZERO", session['cart'])
 
-  #  session['cart'] = {melon_id : 0}
     print(session['cart'].keys())
     if melon_id in session['cart'].keys():
         session['cart'][melon_id] += 1
     else:
         session['cart'][melon_id] = 1
-    print("FIRST", session['cart'][melon_id])
-    # print(melon_id in session['cart'][melon_id].keys())
-    # session['cart'][melon_id] += 1
-    # print("SECOND", session['cart'][melon_id])
-   # else:
-    #    session['cart'][melon_id] = 1
-    #session['cart'][melon_id] = session['cart'][melon_id].get(melon_id, 0) + 1
-    #session['cart'] = session.get(melon_id, [melon_id] = 0) + 1
- #   session['cart'][melon_id].append(1)
 
     # DEBUGGING STATEMENTS, DELETE LATER
     print("MELON ID IS: " + str(melon_id))
