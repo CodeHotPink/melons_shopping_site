@@ -6,7 +6,7 @@ put melons in a shopping cart.
 Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
 
-from flask import Flask, render_template, redirect, flash
+from flask import Flask, render_template, redirect, flash, session
 import jinja2
 
 import melons
@@ -23,7 +23,6 @@ app.secret_key = 'this-should-be-something-unguessable'
 # error.
 
 app.jinja_env.undefined = jinja2.StrictUndefined
-
 
 @app.route("/")
 def index():
@@ -89,6 +88,20 @@ def add_to_cart(melon_id):
 
     # TODO: Finish shopping cart functionality
 
+    try:
+        session['cart']
+    except KeyError:
+        session['cart'] = {}
+
+    session['cart'] = session.get(melon_id, 0) + 1
+
+    # DEBUGGING STATEMENTS, DELETE LATER
+    print("MELON ID IS: " + str(melon_id))
+    print("SESSION DICTIONARY THING: " , session['cart'])
+    print(dir(session))
+    print(type(session))
+
+    flash("Item was successfully added to cart.")
     # The logic here should be something like:
     #
     # - check if a "cart" exists in the session, and create one (an empty
@@ -98,7 +111,7 @@ def add_to_cart(melon_id):
     # - flash a success message
     # - redirect the user to the cart page
 
-    return "Oops! This needs to be implemented!"
+    return redirect("/cart")
 
 
 @app.route("/login", methods=["GET"])
